@@ -1,0 +1,32 @@
+Distributed Scheduler:
+	install minicube, start cluster
+ - https://minikube.sigs.k8s.io/docs/start/?arch=%2Fmacos%2Farm64%2Fstable%2Fhomebrew 
+
+
+configure your shell environment to use the Docker daemon inside the Minikube virtual machine instead of the default Docker daemon on your local machine
+
+eval $(minikube docker-env)
+
+Windows powershell:
+& minikube docker-env --shell powershell | Invoke-Expression
+windows CMD:
+@FOR /f "tokens=*" %i IN ('minikube docker-env --shell cmd') DO @%i
+
+docker build -t distributet-scheduler-master-job:local .
+
+based on https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/
+
+in /distributed-scheduler
+
+https://www.digitalocean.com/community/tutorials/how-to-deploy-postgres-to-kubernetes-cluster#create-a-postgresql-deployment
+
+kubectl apply -f ./k8s/postgres-ConfigMap.yaml
+kubectl apply -f ./k8s/postgres-PersistentVolume.yaml 
+kubectl apply -f ./k8s/postgres-PersistentVolumeClaim.yaml
+kubectl apply -f ./k8s/postgres-Deployment.yaml
+kubectl apply -f ./k8s/postgres-Service.yaml
+
+-- End POSTGRES
+
+
+kubectl create -f ./k8s/masterCronJob.yaml
