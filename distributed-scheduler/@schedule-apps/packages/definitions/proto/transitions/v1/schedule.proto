@@ -1,0 +1,108 @@
+syntax = "proto3";
+
+package shedule;
+
+import "google/protobuf/timestamp.proto";
+
+enum Frequency {
+  Once = 0;
+  Recurring = 1;
+}
+
+enum ExecutorType {
+  shell = 0;
+  http = 1;
+}
+
+enum Status {
+  InQueue = 0;
+  Started = 1;
+  Finished = 2;
+  Failed = 3;
+}
+
+message TaskRun {
+  string scheduleId = 1;
+  Status status = 2;
+  google.protobuf.Timestamp runAt = 3;
+}
+
+message Statistics {
+  int32 taskRunsCount = 1;  
+  google.protobuf.Timestamp lastSuccess = 2;
+  google.protobuf.Timestamp lastError = 3;
+  int32 inQueueCount = 4;
+  int32 errorCount = 5;
+  int32 successCount = 6;
+  string currentStatus = 7;
+}
+
+message Schedule {
+  string id = 1;
+  string description = 2;
+  bool enabled = 3;
+  string ownerId = 4;
+  Frequency frequency = 5;
+  google.protobuf.Timestamp nextRun = 6;
+  string recurringRule = 7;
+  google.protobuf.Timestamp createdAt = 8;
+  google.protobuf.Timestamp updatedAt = 9;
+  string createdBy = 10;
+  string updatedBy = 11;
+  ExecutorType executorType = 12;
+  string executorProperties = 13;
+  repeated TaskRun taskRuns = 14;
+  optional Statistics statistics = 15;
+}
+
+message ScheduleRequest {
+  optional string id = 1;
+  string description = 2;
+  bool enabled = 3;
+  string ownerId = 4;
+  Frequency frequency = 5;
+  google.protobuf.Timestamp nextRun = 6;
+  string recurringRule = 7;
+  ExecutorType executorType = 8;
+  string executorProperties = 9;
+}
+
+message ScheduleByIdRequest {
+  string id = 1;
+}
+
+message ScheduleResponse {
+  Schedule schedule = 1;
+}
+
+message GetScheduleListRequest {
+  optional string ownerId = 1;
+  optional bool enabled = 2;
+}
+
+message GetScheduleListResponse {
+  repeated Schedule schedule = 1;
+}
+
+message ScheduleOperationStatusResponse {
+  bool success = 1;
+}
+
+message PlanExecutionRequest {
+ google.protobuf.Timestamp nextRunFrom = 1;
+ google.protobuf.Timestamp nextRunTo = 2;
+}
+
+service ScheduleService {
+  rpc AddSchedule(ScheduleRequest) returns (ScheduleResponse);
+  rpc UpdateSchedule(ScheduleRequest) returns (ScheduleResponse);
+  rpc DeleteSchedule(ScheduleByIdRequest) returns (ScheduleOperationStatusResponse);
+
+  rpc DisableSchedule(ScheduleByIdRequest) returns (ScheduleOperationStatusResponse);
+  rpc EnableSchedule(ScheduleByIdRequest) returns (ScheduleOperationStatusResponse);
+
+  rpc GetSchedule(ScheduleByIdRequest) returns (ScheduleResponse);
+  rpc GetScheduleBy(GetScheduleListRequest) returns (GetScheduleListResponse);
+
+  rpc PlanExecution(PlanExecutionRequest) returns (ScheduleOperationStatusResponse);
+}

@@ -1,0 +1,36 @@
+{
+	"name": "@schedule-repo/worker",
+	"type": "module",
+	"module": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"import": "./dist/index.js",
+			"types": "./dist/index.d.ts"
+		}
+	},
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"build": "bun run build.mjs",
+		"clean": "rm -rf ./dist",
+		"start": "bun ./dist/index.js",
+		"dev": "bun ./index.ts",
+		"test": "NODE_ENV=test && bun test --env-file=.env.test",
+		"check": "bunx @biomejs/biome check --write ./"
+	},
+	"devDependencies": {
+		"@types/bun": "1.1.6",
+		"bun-plugin-dts": "^0.2.3",
+		"@biomejs/biome": "^1.8.3"
+	},
+	"peerDependencies": {
+		"typescript": "^5.5.3"
+	},
+	"dependencies": {
+		"bullmq": "^5.10.0",
+		"@schedule-repo/logger": "workspace:*",
+		"@schedule-repo/db": "workspace:*"
+	}
+}

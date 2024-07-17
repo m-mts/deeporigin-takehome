@@ -1,0 +1,21 @@
+{
+  "name": "schedule-app",
+  "private": true,
+  "scripts": {
+    "build": "turbo build",
+    "dev": "turbo dev"
+  },
+  "devDependencies": {
+    "turbo": "^2.0.7",
+    "typescript": "^5.5.3"
+  },
+  "engines": {
+    "bun": ">=1"
+  },
+  "packageManager": "bun@1.1.17",
+  "workspaces": [
+    "packages/*",
+    "services/*",
+    "ui-app"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "name": "@schedule-repo/db",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "prisma": {
+    "schema": "./prisma/schema.prisma"
+  },
+  "scripts": {
+    "build": "bun run prisma-generate && bun run build.mjs",
+    "clean": "rm -rf ./dist",
+    "prisma-generate": "prisma generate",
+    "prisma-db-push": "prisma db push",
+    "prisma-execute-sql": "prisma db execute --file ./prisma/extra.sql",
+    "seed": "bun ./prisma/seed/sample.ts",
+    "prisma": "bun run prisma-generate && bun run prisma-db-push && bun run prisma-execute-sql && bun run seed"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.1.6",
+    "bun-plugin-dts": "^0.2.3",
+    "prisma": "^5.17.0",
+    "unbuild": "^2.0.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5.5.3"
+  },
+  "dependencies": {
+    "@prisma/client": "5.17.0"
+  }
+}

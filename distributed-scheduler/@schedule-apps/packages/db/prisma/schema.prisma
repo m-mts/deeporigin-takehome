@@ -1,0 +1,98 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String     @id @default(uuid()) @db.Char(36)
+  name      String     @unique
+  enabled   Boolean    @default(true)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  createdBy String     @db.Char(36)
+  updatedBy String     @db.Char(36)
+  schedule  Schedule[] @relation("UserSchedule")
+}
+
+enum Frequency {
+  Once
+  Recurring
+}
+
+enum ExecutorType {
+  shell
+  http
+}
+
+model Schedule {
+  id                 String               @id @default(uuid()) @db.Char(36)
+  description        String               @db.VarChar(2048)
+  enabled            Boolean              @default(true)
+  owner              User                 @relation("UserSchedule", fields: [ownerId], references: [id])
+  ownerId            String               @db.Char(36)
+  frequency          Frequency
+  nextRun            DateTime?
+  recurringRule      String?              @db.VarChar(512) // cron expression
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  createdBy          String               @db.Char(36)
+  updatedBy          String               @db.Char(36)
+  statistics         ScheduleStatistics[]
+  taskRuns           TaskRun[]
+  executorType       ExecutorType
+  executorProperties Json
+}
+
+model TaskRun {
+  id         String       @id @default(uuid()) @db.Char(36)
+  schedule   Schedule     @relation(fields: [scheduleId], references: [id])
+  scheduleId String       @db.Char(36)
+  status     Status
+  runAt      DateTime
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  createdBy  String       @db.Char(36)
+  updatedBy  String       @db.Char(36)
+  log        TaskRunLog[]
+}
+
+enum Status {
+  InQueue
+  Started
+  Finished
+  Failed
+}
+
+model TaskRunLog {
+  id        String   @id @default(uuid()) @db.Char(36)
+  taskRun   TaskRun  @relation(fields: [taskRunId], references: [id])
+  taskRunId String   @db.Char(36)
+  status    Status
+  runAt     DateTime
+  createdAt DateTime @default(now())
+}
+
+model ScheduleStatistics {
+  schedule      Schedule  @relation(fields: [scheduleId], references: [id])
+  scheduleId    String    @id
+  taskRunsCount Int
+  lastSuccess   DateTime?
+  lastError     DateTime?
+  inQueueCount  Int
+  errorCount    Int
+  successCount  Int
+
+  currentStatus String // Current status as a string including formatted nextRun
+
+  @@map("ScheduleStatistics")
+}

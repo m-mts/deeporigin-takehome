@@ -1,0 +1,42 @@
+{
+  "name": "@schedule-repo/user-microservice",
+  "type": "module",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "bun run build.mjs",
+    "clean": "rm -rf ./dist",
+    "start": "bun ./dist/index.js",
+    "dev": "bun ./src/index.ts",
+    "test": "NODE_ENV=test && bun test --env-file=.env.test",
+    "check": "bunx @biomejs/biome check --write ./src"
+  },
+  "dependencies": {
+    "@connectrpc/connect": "1.4.0",
+    "@connectrpc/connect-fastify": "1.4.0",
+    "@schedule-repo/db": "workspace:*",
+    "@schedule-repo/definitions": "workspace:*",
+    "fastify": "4.28.1",
+    "fastify-plugin": "4.5.1",
+    "@schedule-repo/logger": "workspace:*"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.8.3",
+    "@types/bun": "^1.1.6",
+    "@bufbuild/protobuf": "1.10.0",
+    "bun-plugin-dts": "^0.2.3"
+  },
+  "peerDependencies": {
+    "@bufbuild/protobuf": "1.10.0",
+    "typescript": "^5.5.3"
+  }
+}
