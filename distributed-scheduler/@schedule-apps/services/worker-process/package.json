@@ -17,6 +17,7 @@
 		"clean": "rm -rf ./dist",
 		"start": "bun ./dist/index.js",
 		"dev": "bun ./index.ts",
+		"dev-docker": "bun --env-file=.env.docker ./index.ts",
 		"test": "NODE_ENV=test && bun test --env-file=.env.test",
 		"check": "bunx @biomejs/biome check --write ./"
 	},

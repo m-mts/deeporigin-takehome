@@ -6,6 +6,7 @@
     "start": "bun ./build/index.js",
     "build": "bun run build.mjs",
     "dev": "bun ./src/index.ts",
+    "cron": "bun run dev",
     "test": "NODE_ENV=test && bun test --env-file=.env.test"
   },
   "devDependencies": {

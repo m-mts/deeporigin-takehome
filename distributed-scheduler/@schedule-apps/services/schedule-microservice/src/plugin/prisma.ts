@@ -1,23 +1,22 @@
-import xPrisma from "@schedule-repo/db";
-import type { ExtendedPrismaClient } from "@schedule-repo/db";
+import { ExtendedPrismaClient } from "@schedule-repo/db";
+import type { ExtendedPrismaClientType } from "@schedule-repo/db";
 import type { FastifyPluginAsync } from "fastify";
 import fp from "fastify-plugin";
 import { getLogger } from "../../../../packages/logger/dist";
 
-const logger = getLogger("user-service:prisma-plugin");
+const logger = getLogger("schedule-service:prisma-plugin");
 
 declare module "fastify" {
 	interface FastifyInstance {
-		xPrisma: ExtendedPrismaClient;
+		xPrisma: ExtendedPrismaClientType;
 	}
 }
 const prismaPlugin: FastifyPluginAsync = fp(async (server) => {
-	try {
-		logger.info("Establish prisma connection");
-		await xPrisma.$connect();
-	} catch {
-		logger.warn("Not connected to database");
-	}
+	logger.info("Connecting to prisma", process.env.DATABASE_URL);
+	const xPrisma = ExtendedPrismaClient({
+		datasourceUrl: process.env.DATABASE_URL,
+		log: [ 'query', 'info', 'warn', 'error' ],
+	});
 	server.decorate("xPrisma", xPrisma);
 	server.addHook("onClose", async (server) => {
 		logger.info("Shutting down prisma connection");

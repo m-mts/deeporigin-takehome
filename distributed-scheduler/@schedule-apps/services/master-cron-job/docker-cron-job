@@ -1,0 +1,1 @@
+*/3 * * * * cd /app && /root/.bun/bin/bun run cron >> /var/log/cron.log 2>&1

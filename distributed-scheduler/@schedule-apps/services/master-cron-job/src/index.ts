@@ -6,9 +6,8 @@ const logger = getLogger("master-cron-job");
 
 export async function main(runAt: Date | undefined = undefined, attempt = 1): Promise<void> {
   const currentRun = runAt ?? new Date();
-  //currentRun.setHours(15);
-  //currentRun.setMinutes(52);
-  const interval = Number.parseInt(process.env.PLAN_INTERVAL ?? '10');
+
+  const interval = Number.parseInt(process.env.RUN_INTERVAL ?? '5');
   console.log(clientSchedule)
   logger.info("Master planner started at", currentRun);
 
