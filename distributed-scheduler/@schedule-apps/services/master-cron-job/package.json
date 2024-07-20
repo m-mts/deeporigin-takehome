@@ -21,6 +21,8 @@
     "@connectrpc/connect": "^1.4.0",
     "@connectrpc/connect-web": "^1.4.0",
     "@schedule-repo/definitions": "workspace:*",
-    "@schedule-repo/logger": "workspace:*"
+    "@schedule-repo/logger": "workspace:*",
+    "@types/node-persist": "^3.1.8",
+    "node-persist": "^4.0.2"
   }
 }

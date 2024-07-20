@@ -9,7 +9,10 @@ out/
 build
 dist
 .turbo/
+
+#data
 data/
+.node-persist/
 
 # Debug
 npm-debug.log*

@@ -15,6 +15,7 @@ type QueueJobData = {
   description: string,
   runAt: Date,
   taskRunId: string,
+  ownerId: string,
 };
 
 export async function planExecution(request: PlanExecutionRequest) {
@@ -119,8 +120,12 @@ async function createTaskRun(task: Schedule, runAt: Date, queue: Queue<QueueJobD
     })) as TaskRun;
 
     await queue.add(taskRun.id,
-      { description: task.description, runAt, taskRunId: taskRun.id } as QueueJobData,
-      { delay: Number(runAt) - Number(new Date()) }
+      { description: task.description, runAt, taskRunId: taskRun.id, ownerId: task.ownerId } as QueueJobData,
+      {
+        delay: Number(runAt) - Number(new Date()),
+        //Deduplication
+        jobId: `${taskRun.id}-${runAt.getTime()}`
+      }
     );
     logger.info("Task run created", taskRun);
     return taskRun;

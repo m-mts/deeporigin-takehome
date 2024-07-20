@@ -20,12 +20,12 @@ ENV NEXT_TELEMETRY_DISABLED 1
 
 COPY --from=base /app .
 
-copy --from=base /app/docker_entrypoint /usr/bin/docker_entrypoint
+copy --from=base /app/docker/docker_entrypoint /usr/bin/docker_entrypoint
 RUN chmod +x /usr/bin/docker_entrypoint
 
 RUN apt-get update && apt-get install -y cron
 
-COPY --from=base /app/services/master-cron-job/docker-cron-job /etc/cron.d/docker-cron-job
+COPY --from=base /app/docker/docker-cron-job /etc/cron.d/docker-cron-job
 RUN chmod 0644 /etc/cron.d/docker-cron-job
 RUN crontab /etc/cron.d/docker-cron-job
 RUN touch /var/log/cron.log

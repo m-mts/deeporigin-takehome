@@ -37,7 +37,7 @@ services:
   all-apps-dev:
     build:
       context: .
-      dockerfile: ./Dockerfile
+      dockerfile: ./docker/Dockerfile
     container_name: all-apps-dev
     restart: always
     ports:
