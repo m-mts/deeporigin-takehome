@@ -3,7 +3,9 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
-    "dev": "turbo dev"
+    "dev": "turbo run dev --filter=\"./ui-app\" --filter=\"./services/schedule-microservice\"  --filter=\"./services/user-microservice\" --filter=\"./services/worker-process\"",
+    "dev-docker": "turbo run dev-docker --filter=\"./ui-app\" --filter=\"./services/schedule-microservice\"  --filter=\"./services/user-microservice\" --filter=\"./services/worker-process\"",
+    "cron": "turbo run cron --filter=\"./services/master-cron-job\""
   },
   "devDependencies": {
     "turbo": "^2.0.7",

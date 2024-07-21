@@ -1,6 +1,5 @@
-import { type Job, Worker } from "bullmq";
 import { logger, type QueueJobData } from "./index";
-import type { ExtendedPrismaClient, TaskRun } from "@schedule-repo/db";
+import type { ExtendedPrismaClientType } from "@schedule-repo/db";
 import { executeShellTask } from "./executeShellTask";
 import { executeHttpTask } from "./executeHttpTask";
 
@@ -9,7 +8,7 @@ const executor: { [ key: string ]: (runProps: string) => Promise<void> } = {};
 executor.http = executeHttpTask;
 executor.shell = executeShellTask;
 
-export async function executeTask(xPrisma: ExtendedPrismaClient, job: QueueJobData) {
+export async function executeTask(xPrisma: ExtendedPrismaClientType, job: QueueJobData) {
     logger.info("Executing task", job);
     const run = await xPrisma.taskRun.findUnique({
         where: {

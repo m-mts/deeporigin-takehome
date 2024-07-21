@@ -1,6 +1,11 @@
+import { fileURLToPath } from 'node:url';
+import { dirname } from 'node:path';
+global.__filename = fileURLToPath(import.meta.url);
+global.__dirname = dirname(__filename);
+
 import { type Job, Worker } from "bullmq";
 import { getLogger } from "@schedule-repo/logger";
-import xPrisma from "@schedule-repo/db";
+import { ExtendedPrismaClient } from "@schedule-repo/db";
 import {
     Status,
 } from "@schedule-repo/db";
@@ -13,6 +18,11 @@ export type QueueJobData = {
 };
 
 export const logger = getLogger("job-worker");
+
+const xPrisma = ExtendedPrismaClient({
+    datasourceUrl: process.env.DATABASE_URL,
+    log: [ "query", "info", "warn", "error" ],
+});
 
 const proceedJob = async (job: Job<QueueJobData>) => {
     logger.info("Job started :::", { job: job.data });

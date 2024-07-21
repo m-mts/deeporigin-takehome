@@ -9,5 +9,5 @@ export function timestampToDate(
   const milliseconds =
     BigInt(timestamp.seconds) * BigInt(1000) +
     BigInt(timestamp.nanos) / BigInt(1000000);
-  return new Date(Number(milliseconds));
+  return new Date(new Date(Number(milliseconds)).getTime());
 }

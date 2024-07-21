@@ -28,7 +28,7 @@ DROP VIEW IF EXISTS "ScheduleStatistics";
 CREATE VIEW "ScheduleStatistics" AS
 SELECT
     "s"."id" AS "scheduleId",
-    COUNT("tr"."id") AS "taskRunsCount",
+    COUNT(DISTINCT "tr"."id") AS "taskRunsCount",
     MAX(CASE WHEN "trl"."status" = 'Finished' THEN "trl"."createdAt" ELSE NULL END) AS "lastSuccess",
     MAX(CASE WHEN "trl"."status" = 'Failed' THEN "trl"."createdAt" ELSE NULL END) AS "lastError",
     COUNT(CASE WHEN "trl"."status" = 'InQueue' THEN 1 ELSE NULL END) AS "inQueueCount",

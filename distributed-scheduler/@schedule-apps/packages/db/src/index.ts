@@ -1,13 +1,13 @@
 // lib/prisma.ts
 
-import { PrismaClient } from "@prisma/client";
+import { type Prisma, PrismaClient } from "@prisma/client";
 
 export { Frequency, ExecutorType, Status } from "@prisma/client";
 
 export * from "@prisma/client";
 
-const prismaClientSingleton = () => {
-  const prisma = new PrismaClient().$extends({
+export const ExtendedPrismaClient = (props: Prisma.Subset<Prisma.PrismaClientOptions, Prisma.PrismaClientOptions> | undefined) => {
+  const prisma = new PrismaClient(props).$extends({
     model: {
       user: {
         async findByNameOrCreate(
@@ -53,15 +53,4 @@ const prismaClientSingleton = () => {
   return prisma;
 };
 
-type PrismaClientSingleton = ReturnType<typeof prismaClientSingleton>;
-
-const globalForPrisma = globalThis as unknown as {
-  prisma: PrismaClientSingleton | undefined;
-};
-
-const xPrisma = globalForPrisma.prisma ?? prismaClientSingleton();
-
-if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = xPrisma;
-
-export default xPrisma;
-export type ExtendedPrismaClient = PrismaClientSingleton;
+export type ExtendedPrismaClientType = ReturnType<typeof ExtendedPrismaClient>;

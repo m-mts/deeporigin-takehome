@@ -16,13 +16,13 @@
     "prisma-db-push": "prisma db push",
     "prisma-execute-sql": "prisma db execute --file ./prisma/extra.sql",
     "seed": "bun ./prisma/seed/sample.ts",
-    "prisma": "bun run prisma-generate && bun run prisma-db-push && bun run prisma-execute-sql && bun run seed"
+    "prisma": "bun run prisma-generate && bun run prisma-db-push && bun run prisma-execute-sql",
+    "prisma-docker": "bun --env-file=.env.docker run prisma-db-push && bun --env-file=.env.docker run prisma-execute-sql"
   },
   "devDependencies": {
     "@types/bun": "^1.1.6",
     "bun-plugin-dts": "^0.2.3",
-    "prisma": "^5.17.0",
-    "unbuild": "^2.0.0"
+    "prisma": "^5.17.0"
   },
   "peerDependencies": {
     "typescript": "^5.5.3"
