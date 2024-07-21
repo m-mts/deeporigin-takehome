@@ -23,8 +23,8 @@ ENV DEBUG *
 
 COPY --from=base /app .
 
-copy --from=base /app/docker/docker_entrypoint /usr/bin/docker_entrypoint
-RUN chmod +x /usr/bin/docker_entrypoint
+COPY --from=base /app/docker/docker_entrypoint.sh /usr/bin/docker_entrypoint.sh
+RUN chmod +x /usr/bin/docker_entrypoint.sh
 
 RUN apt-get update && apt-get install -y cron
 
@@ -38,4 +38,4 @@ RUN touch /var/log/cron.log
 WORKDIR /app
 
 EXPOSE 8080/tcp
-ENTRYPOINT ["/usr/bin/docker_entrypoint"]
+ENTRYPOINT ["/usr/bin/docker_entrypoint.sh"]
