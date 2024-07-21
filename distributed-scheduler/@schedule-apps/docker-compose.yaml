@@ -7,14 +7,19 @@ services:
       POSTGRES_DB: app_ds_db
       POSTGRES_USER: db_user
     ports:
-      - "5432:5432"
+      - 5432:5432
     volumes:
       - ./data/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 15s
+      retries: 5
 
   dragonflydb:
     image: docker.dragonflydb.io/dragonflydb/dragonfly
     ports:
-      - "6379:6379"
+      - 6379:6379
     command: --cluster_mode=emulated --lock_on_hashtags
     ulimits:
       memlock:
@@ -30,7 +35,9 @@ services:
     environment:
       DATABASE_URL: postgresql://db_user:password@local-postgres:5432/app_ds_db?schema=public
     depends_on:
-      - local-postgres
+      local-postgres:
+        condition: service_healthy
+    command: sh -c "bun run prisma"
     links:
       - local-postgres
 
@@ -43,6 +50,7 @@ services:
     ports:
       - 3000:3000
     depends_on:
-      - local-postgres
+      local-postgres:
+        condition: service_healthy
     links:
       - local-postgres
