@@ -1,6 +1,6 @@
-import { SubmitButton } from "../submit-button";
+import { SubmitButton } from "@/app/components/submit-button";
 import { Input } from "./input";
-import { login } from "../../actions/authenticate";
+import { login } from "@/app/actions/authenticate";
 
 export async function Form() {
 	return (

@@ -105,7 +105,7 @@ export function toScheduleMessage(schedule: Schedule): Partial<gRPCSchedule> {
   };
 }
 
-function toStatus(val: gRPCStatus): Status {
+export function toStatus(val: gRPCStatus): Status {
   const map = new Map<gRPCStatus, Status>([
     [ gRPCStatus.InQueue, "InQueue" ],
     [ gRPCStatus.Started, "Started" ],
@@ -119,7 +119,7 @@ function toStatus(val: gRPCStatus): Status {
   return map.get(val) as Status;
 }
 
-function toFrequency(val: gRPCFrequency): Frequency {
+export function toFrequency(val: gRPCFrequency): Frequency {
   const map = new Map<gRPCFrequency, Frequency>([
     [ gRPCFrequency.Once, "Once" ],
     [ gRPCFrequency.Recurring, "Recurring" ],
@@ -131,7 +131,7 @@ function toFrequency(val: gRPCFrequency): Frequency {
   return map.get(val) as Frequency;
 }
 
-function toExecutorType(val: gRPCExecutorType): ExecutorType {
+export function toExecutorType(val: gRPCExecutorType): ExecutorType {
   const map = new Map<gRPCExecutorType, ExecutorType>([
     [ gRPCExecutorType.shell, "shell" ],
     [ gRPCExecutorType.http, "http" ],
@@ -142,7 +142,7 @@ function toExecutorType(val: gRPCExecutorType): ExecutorType {
   return map.get(val) as ExecutorType;
 }
 
-function togRPCFrequency(val: Frequency): gRPCFrequency {
+export function togRPCFrequency(val: Frequency): gRPCFrequency {
   const map = new Map<Frequency, gRPCFrequency>([
     [ "Once", gRPCFrequency.Once ],
     [ "Recurring", gRPCFrequency.Recurring ],
@@ -154,7 +154,7 @@ function togRPCFrequency(val: Frequency): gRPCFrequency {
   return map.get(val) as gRPCFrequency;
 }
 
-function togRPCExecutorType(val: ExecutorType): gRPCExecutorType {
+export function togRPCExecutorType(val: ExecutorType): gRPCExecutorType {
   const map = new Map<ExecutorType, gRPCExecutorType>([
     [ "shell", gRPCExecutorType.shell ],
     [ "http", gRPCExecutorType.http ],

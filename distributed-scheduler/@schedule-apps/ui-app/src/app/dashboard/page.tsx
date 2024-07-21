@@ -1,10 +1,10 @@
-import Dashboard from "../components/dashboard/dashboard";
-import { Schedule } from "../components/schedule/schedule";
+import Dashboard from "@/app/components/dashboard/dashboard";
+import { Schedule } from "@/app/components/schedule/schedule";
 
-export default function LoginPage() {
+export default function DashboardPage() {
 	return (
-		<Dashboard>
-			<Schedule />
+		<Dashboard data-testid="dashboard">
+			<Schedule data-testid="schedule" />
 		</Dashboard>
 	);
 }

@@ -1,5 +1,5 @@
-import type { SessionData } from "../../tools/session";
-import { defaultSession, sessionOptions } from "../../tools/session";
+import type { SessionData } from "@/tools/session";
+import { defaultSession, sessionOptions } from "@/tools/session";
 import { getIronSession } from "iron-session";
 import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";

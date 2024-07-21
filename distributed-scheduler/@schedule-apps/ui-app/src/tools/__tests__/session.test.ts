@@ -1,5 +1,5 @@
-import { describe, expect, test } from "bun:test";
-import { defaultSession, sessionOptions } from "./session";
+import { describe, expect, test } from "vitest";
+import { defaultSession, sessionOptions } from "@/tools/session";
 
 describe("Session Tests", () => {
     test("should have default session data", () => {

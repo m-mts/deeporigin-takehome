@@ -45,7 +45,7 @@ export default function validateJSON(input: string): boolean {
     return true;
 }
 
-function isValidURL(url: string): boolean {
+export function isValidURL(url: string): boolean {
     try {
         new URL(url);
         return true;
@@ -54,12 +54,12 @@ function isValidURL(url: string): boolean {
     }
 }
 
-const validMethods = new Set<string>([ 'GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTIONS' ]);
-function isValidHTTPMethod(method: string): boolean {
+export const validMethods = new Set<string>([ 'GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTIONS' ]);
+export function isValidHTTPMethod(method: string): boolean {
     return validMethods.has(method.toUpperCase());
 }
 
-function isValidHeader(header: Record<string, string>): boolean {
+export function isValidHeader(header: Record<string, string>): boolean {
     if (typeof header !== 'object' || Object.keys(header).length !== 1) {
         return false;
     }

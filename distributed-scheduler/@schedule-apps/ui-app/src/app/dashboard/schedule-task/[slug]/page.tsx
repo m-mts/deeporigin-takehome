@@ -3,7 +3,7 @@ import {
 	type ScheduleForm,
 } from "@/app/components/dashboard/schedule-task/edit";
 import StatisticsView from "@/app/components/dashboard/schedule-task/statistics";
-import Dashboard from "../../../components/dashboard/dashboard";
+import Dashboard from "@/app/components/dashboard/dashboard";
 import type { Schedule as gRPCSchedule } from "@schedule-repo/definitions";
 import { clientSchedule } from "@/tools/client-schedule-service";
 import { toSchedule, type Statistics, type TaskRun } from "@/types/schedule";
@@ -21,10 +21,17 @@ export default async function EditScheduleTaskPage({
 	) as ScheduleForm & { statistics: Statistics; taskRuns: TaskRun[] };
 
 	return (
-		<Dashboard>
-			<StatisticsView statistics={task.statistics} />
-			<EditScheduleTaskForm task={task} mode="edit" />
-			<TaskRunView taskRuns={task.taskRuns} />
+		<Dashboard data-testid="dashboard">
+			<StatisticsView
+				statistics={task.statistics}
+				data-testid="statistics-view"
+			/>
+			<EditScheduleTaskForm
+				task={task}
+				mode="edit"
+				data-testid="edit-schedule-task-form"
+			/>
+			<TaskRunView taskRuns={task.taskRuns} data-testid="task-run-view" />
 		</Dashboard>
 	);
 }

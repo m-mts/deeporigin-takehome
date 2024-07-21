@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import deleteTask from "../../actions/delete-schedule";
-import { Alert } from "../alert";
+import deleteTask from "@/app/actions/delete-schedule";
+import { Alert } from "@/app/components/alert";
 
 export const DeleteButton = ({
 	itemId,

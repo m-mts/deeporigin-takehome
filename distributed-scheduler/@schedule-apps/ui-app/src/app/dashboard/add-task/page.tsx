@@ -2,7 +2,7 @@ import {
 	EditScheduleTaskForm,
 	type ScheduleForm,
 } from "@/app/components/dashboard/schedule-task/edit";
-import Dashboard from "../../components/dashboard/dashboard";
+import Dashboard from "@/app/components/dashboard/dashboard";
 
 import { addMinutes } from "date-fns";
 
@@ -18,8 +18,12 @@ export default function AddScheduleTaskPage() {
 		executorProperties: "",
 	} as ScheduleForm;
 	return (
-		<Dashboard>
-			<EditScheduleTaskForm task={task} mode={"add"} />
+		<Dashboard data-testid="dashboard">
+			<EditScheduleTaskForm
+				task={task}
+				mode={"add"}
+				data-testid="edit-schedule-task-form"
+			/>
 		</Dashboard>
 	);
 }
