@@ -1,6 +1,8 @@
 ```
 cd distributed-scheduler@schedule-apps
-
+```
+and
+```
 docker compose up -d
 ```
 
