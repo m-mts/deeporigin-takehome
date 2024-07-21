@@ -8,7 +8,7 @@ import storage from 'node-persist';
 
 export async function main(runAt: Date | undefined = undefined, attempt = 1): Promise<void> {
   const startFromTs = await storage.getItem('START_FROM_TS') ?? new Date().getTime();
-  const currentRun = runAt ?? new Date(startFromTs - 1500);
+  const currentRun = runAt ?? new Date(startFromTs - 2500);
   const interval = Number.parseInt(process.env.RUN_INTERVAL ?? '5');
   const currentRunTill = new Date(Math.max(currentRun.getTime() + interval * 60000, new Date().getTime()) + 2000);
   logger.info("Master planner started at", currentRun, currentRunTill);

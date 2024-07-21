@@ -18,6 +18,9 @@ ENV PATH="/root/.bun/bin:$PATH"
 ENV NODE_ENV development
 ENV NEXT_TELEMETRY_DISABLED 1
 
+# Prisma debug
+ENV DEBUG *
+
 COPY --from=base /app .
 
 copy --from=base /app/docker/docker_entrypoint /usr/bin/docker_entrypoint

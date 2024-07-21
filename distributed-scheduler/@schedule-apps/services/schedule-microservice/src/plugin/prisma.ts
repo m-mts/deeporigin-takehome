@@ -17,6 +17,7 @@ const prismaPlugin: FastifyPluginAsync = fp(async (server) => {
 		datasourceUrl: process.env.DATABASE_URL,
 		log: [ 'query', 'info', 'warn', 'error' ],
 	});
+
 	server.decorate("xPrisma", xPrisma);
 	server.addHook("onClose", async (server) => {
 		logger.info("Shutting down prisma connection");
