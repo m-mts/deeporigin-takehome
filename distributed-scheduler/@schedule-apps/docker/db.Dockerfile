@@ -17,6 +17,3 @@ WORKDIR /app/packages/db
 
 ENV NODE_ENV development
 
-#RUN chmod +x /app/docker/wait-for-it.sh
-
-#ENTRYPOINT ["sh", "-c", "/app/docker/wait-for-it.sh db:5432 -- echo 'Postgres is up' && bun run prisma"]
